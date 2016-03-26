@@ -29,13 +29,13 @@ public class ShowActivity extends AppCompatActivity {
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-        NetWorkDetector detector=new NetWorkDetector(client,this.getApplicationContext());
-        if(detector.isNetworkConnected()){
-            String NetworkType=String.valueOf(detector.getNetworkType());
-            Toast.makeText(this,NetworkType,Toast.LENGTH_LONG).show();
-        }else{
-            String NetworkType="没有连接网络";
-            Toast.makeText(this,NetworkType,Toast.LENGTH_LONG).show();
+        NetWorkDetector detector = new NetWorkDetector(client, this.getApplicationContext());
+        if (detector.isNetworkConnected()) {
+            String NetworkType = String.valueOf(detector.getNetworkType());
+            Toast.makeText(this, NetworkType, Toast.LENGTH_LONG).show();
+        } else {
+            String NetworkType = "没有连接网络";
+            Toast.makeText(this, NetworkType, Toast.LENGTH_LONG).show();
         }
     }
 
