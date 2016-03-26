@@ -12,6 +12,8 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import linzhenhuan.jrrc_android_new.linzhenhuan.jrrc.net.NetWorkDetector;
+
 public class ShowActivity extends AppCompatActivity {
 
     /**
@@ -27,94 +29,15 @@ public class ShowActivity extends AppCompatActivity {
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-        if(isNetworkConnected()){
-            String NetworkType=String.valueOf(getNetworkType());
+        NetWorkDetector detector=new NetWorkDetector(client,this.getApplicationContext());
+        if(detector.isNetworkConnected()){
+            String NetworkType=String.valueOf(detector.getNetworkType());
+            Toast.makeText(this,NetworkType,Toast.LENGTH_LONG).show();
+        }else{
+            String NetworkType="没有连接网络";
             Toast.makeText(this,NetworkType,Toast.LENGTH_LONG).show();
         }
     }
 
 
-    /**
-     * 检测网络是否可用
-     *
-     * @return
-     */
-    public boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo ni = cm.getActiveNetworkInfo();
-        return ni != null && ni.isConnectedOrConnecting();
-    }
-
-    /**
-     * 获取当前网络类型
-     *
-     * @return 0：没有网络   1：WIFI网络   2：WAP网络    3：NET网络
-     */
-
-    public static final int NETTYPE_WIFI = 0x01;
-    public static final int NETTYPE_CMWAP = 0x02;
-    public static final int NETTYPE_CMNET = 0x03;
-
-    public int getNetworkType() {
-        int netType = 0;
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (networkInfo == null) {
-            return netType;
-        }
-        int nType = networkInfo.getType();
-        if (nType == ConnectivityManager.TYPE_MOBILE) {
-            String extraInfo = networkInfo.getExtraInfo();
-            if (!extraInfo.isEmpty()) {
-                if (extraInfo.toLowerCase().equals("cmnet")) {
-                    netType = NETTYPE_CMNET;
-                } else {
-                    netType = NETTYPE_CMWAP;
-                }
-            }
-        } else if (nType == ConnectivityManager.TYPE_WIFI) {
-            netType = NETTYPE_WIFI;
-        }
-        return netType;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Show Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://linzhenhuan.jrrc_android_new/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Show Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://linzhenhuan.jrrc_android_new/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
-    }
 }
