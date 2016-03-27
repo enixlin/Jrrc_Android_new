@@ -36,6 +36,7 @@ public class ShowActivity extends AppCompatActivity {
         } else {
             String NetworkType = "没有连接网络";
             Toast.makeText(this, NetworkType, Toast.LENGTH_LONG).show();
+
         }
     }
 
