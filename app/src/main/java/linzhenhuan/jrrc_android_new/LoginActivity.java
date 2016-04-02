@@ -14,7 +14,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import linzhenhuan.jrrc_android_new.linzhenhuan.jrrc.net.NetWorkDetector;
 
-public class ShowActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.

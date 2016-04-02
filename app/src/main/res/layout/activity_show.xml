@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
 
     android:background="@drawable/station"
-    tools:context="linzhenhuan.jrrc_android_new.ShowActivity">
+    tools:context=".LoginActivity">
 
     <TextView
         android:layout_width="wrap_content"
