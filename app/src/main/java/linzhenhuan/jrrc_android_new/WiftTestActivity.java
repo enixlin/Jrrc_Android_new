@@ -31,9 +31,9 @@ public class WiftTestActivity extends AppCompatActivity {
 
                                                 WifiAdmin wa = new WifiAdmin(getApplicationContext());
                                                 System.out.println(wa);
-                                                String ssid="jrrc";
+                                                String ssid="ENIXLIN";
                                                 int type=3;
-                                                String password="meeting@rhe8O23";
+                                                String password="39453945LYp";
                                                 WifiConfiguration wcg=wa.CreateWifiInfo(ssid, password, type);
                                                 wa.addNetwork(wcg);
 
@@ -45,17 +45,17 @@ public class WiftTestActivity extends AppCompatActivity {
         WifiManager wm = (WifiManager) this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         wm.startScan();
 
-        List<ScanResult> list = wm.getScanResults();
-        String rl = "";
-        for (
-                int n = 0;
-                n < list.size(); n++)
-
-        {
-            rl = rl + list.get(n).SSID.toString() + "\n";
-        }
-
-        TextView tv = (TextView) findViewById(R.id.textView);
-        tv.setText(rl);
+//        List<ScanResult> list = wm.getScanResults();
+//        String rl = "";
+//        for (
+//                int n = 0;
+//                n < list.size(); n++)
+//
+//        {
+//            rl = rl + list.get(n).SSID.toString() + "\n";
+//        }
+//
+//        TextView tv = (TextView) findViewById(R.id.textView);
+//        tv.setText(rl);
     }
 }
