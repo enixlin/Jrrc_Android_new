@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
                 WifiConfiguration wcg=new WifiConfiguration();
                 wcg.SSID="\""+"ENIXLIN"+"\"";
                 wcg.preSharedKey="\""+"39453945LYp"+"\"";
-                wcg.
+
 
 
             }
