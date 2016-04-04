@@ -1,5 +1,6 @@
 package linzhenhuan.jrrc_android_new.linzhenhuan.jrrc.ui;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ContentValues;
 import android.content.Context;
@@ -33,11 +34,12 @@ import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
 import linzhenhuan.jrrc_android_new.R;
+import linzhenhuan.jrrc_android_new.TestBundleActivity;
 import linzhenhuan.jrrc_android_new.linzhenhuan.jrrc.net.HttpClient;
 import linzhenhuan.jrrc_android_new.linzhenhuan.jrrc.net.NetWorkDetector;
 import linzhenhuan.jrrc_android_new.linzhenhuan.jrrc.net.ParamPairs;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends Activity {
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -51,16 +53,45 @@ public class LoginActivity extends AppCompatActivity {
 
     private Button btn_exit;
     private Button btn_submit;
+    private Button btn_testBundle;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        et_name.setText(data.getExtras().get("backdata").toString());
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+
         tv_message = (TextView) findViewById(R.id.tv_message);
 
         et_name = (EditText) findViewById(R.id.et_name);
         et_password = (EditText) findViewById(R.id.et_password);
+
+        btn_testBundle= (Button) findViewById(R.id.button4);
+        btn_testBundle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                ParamPairs paramPairs = new ParamPairs("name", et_name.getText().toString());
+                //bundle.putString("name", "linzhenhuan");
+                bundle.putSerializable("name", paramPairs);
+                Intent intent = new Intent(LoginActivity.this, TestBundleActivity.class);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 1);
+
+
+            }
+        });
+
+
 
         //退出app
         btn_exit = (Button) findViewById(R.id.btn_exit);
@@ -97,6 +128,8 @@ public class LoginActivity extends AppCompatActivity {
                             //登录成功，
                             Toast.makeText(LoginActivity.this, "验证成功", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(LoginActivity.this, FunctionActivity.class);
+                            Bundle bundle=new Bundle();
+                            
                             startActivity(intent);
 
                         } else {
@@ -118,6 +151,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
+
 
 
 }
