@@ -1,5 +1,7 @@
 package linzhenhuan.jrrc_android_new.linzhenhuan.jrrc.net;
 
+import java.util.ArrayList;
+
 /**
  * Created by linzhenhuan on 2016/4/3.
  */
@@ -27,4 +29,6 @@ public class ParamPairs {
     public void setValue(String value) {
         this.value = value;
     }
+
+
 }

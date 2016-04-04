@@ -3,6 +3,7 @@ package linzhenhuan.jrrc_android_new.linzhenhuan.jrrc.net;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
@@ -13,6 +14,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -30,25 +32,27 @@ public class HttpClient implements Runnable {
     private String url;
     private ArrayList<ParamPairs> list;
     private String method;
+    private Handler handler;
 
 
-
-
-    public HttpClient(String url, ArrayList<ParamPairs> list, String method) {
+    public HttpClient(String url, ArrayList<ParamPairs> list, String method, Handler handler) {
         this.url = url;
         this.list = list;
         this.method = method;
+        this.handler = handler;
 
-        HttpURLConnection client = null;
         try {
-            URL URL = new URL(this.url);
-            client = (HttpURLConnection) URL.openConnection();
+            URL URL = new URL(this.url + encoderparams(list));
+            this.client = (HttpURLConnection) URL.openConnection();
+            this.client.setDoOutput(true);
+            this.client.setRequestMethod("POST");
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.client = client;
+        //this.client = client;
 
     }
 
@@ -77,46 +81,20 @@ public class HttpClient implements Runnable {
     }
 
 
-    public String request() {
-
-        String resutl = "";
-        if (this.method == "POST" || this.method == "post") {
-            try {
-                client.setDoOutput(true);
-                client.setRequestMethod("POST");
-                OutputStream os = client.getOutputStream();
-                OutputStreamWriter osw = new OutputStreamWriter(os, "utf-8");
-                BufferedWriter bw = new BufferedWriter(osw);
-                bw.write(encoderparams(list));
-                bw.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-
-        try {
-            InputStream is=client.getInputStream();
-            InputStreamReader isr=new InputStreamReader(is,"utf-8");
-            BufferedReader br=new BufferedReader(isr);
-            String line="";
-            while((line=br.readLine())!=null){
-                resutl=resutl+line;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return resutl;
-    }
-
-
     private String encoderparams(ArrayList<ParamPairs> list) {
         String result = "";
 
+        try {
         for (int n = 0; n < list.size(); n++) {
-         result=result+"/"+list.get(n).getKey()+"/"+list.get(n).getValue();
+            if (n == 0) {
+                result = result + URLEncoder.encode(list.get(n).getKey(), "UTF-8") + "/" + URLEncoder.encode(list.get(n).getValue(),"UTF-8");
+            } else {
+                result = result + "/" + URLEncoder.encode(list.get(n).getKey(), "UTF-8") + "/" + URLEncoder.encode(list.get(n).getValue(), "UTF-8");
+            }
+        }
 
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
         return result;
     }
@@ -125,10 +103,36 @@ public class HttpClient implements Runnable {
     @Override
     public void run() {
         Looper.prepare();
-        request();
-        Message message = new Message();
-        message.what = 1;
-        MyHandler handler=new MyHandler();
-        handler.sendMessage(message);
+
+        String result = "";
+
+        try {
+
+            InputStream is = this.client.getInputStream();
+            InputStreamReader isr = new InputStreamReader(is, "utf-8");
+            BufferedReader br = new BufferedReader(isr);
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                result = result + line;
+            }
+
+            br.close();
+            isr.close();
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (result.equals("1")) {
+            Message message = new Message();
+            message.what = 1;
+            handler.sendMessage(message);
+        } else {
+            Message message = new Message();
+            message.what = 0;
+            handler.sendMessage(message);
+
+        }
+
     }
 }

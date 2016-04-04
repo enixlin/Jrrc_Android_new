@@ -3,6 +3,7 @@ package linzhenhuan.jrrc_android_new.linzhenhuan.jrrc.ui;
 import android.app.ActivityManager;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -56,13 +57,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        tv_message= (TextView) findViewById(R.id.tv_message);
+        tv_message = (TextView) findViewById(R.id.tv_message);
 
-        et_name= (EditText) findViewById(R.id.et_name);
-        et_password= (EditText) findViewById(R.id.et_password);
+        et_name = (EditText) findViewById(R.id.et_name);
+        et_password = (EditText) findViewById(R.id.et_password);
 
         //退出app
-        btn_exit= (Button) findViewById(R.id.btn_exit);
+        btn_exit = (Button) findViewById(R.id.btn_exit);
         btn_exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,37 +71,53 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        btn_submit= (Button) findViewById(R.id.btn_submit);
+        btn_submit = (Button) findViewById(R.id.btn_submit);
         //登录请求
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url="http://10.0.2.2/jrrc_server_php/home/login/login_android";
-                ArrayList<ParamPairs> list=new ArrayList<ParamPairs>();
-                String method="post";
+                //  String url="http://10.0.2.2/jrrc_server_php/home/Login/login_android/name/a/password/a";
+                String url = "http://10.0.2.2/jrrc_server_php/home/Login/login_android/";
+                // String url="http://192.168.31.165/jrrc_server_php/home/Login/login_android";
+                ArrayList<ParamPairs> list = new ArrayList<ParamPairs>();
+                String method = "POST";
 
 
-                list.add(new ParamPairs("name",et_name.getText().toString()));
-                list.add(new ParamPairs("password",et_password.getText().toString()));
+                list.add(new ParamPairs("name", et_name.getText().toString()));
+                list.add(new ParamPairs("password", et_password.getText().toString()));
 
-                MyHandler myHandler=new MyHandler();
-                HttpClient client=new HttpClient(url,list,method);
-                Thread thread=new Thread(client);
+
+                android.os.Handler handler = new android.os.Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        super.handleMessage(msg);
+//
+                        //tv_message.setText("login message!"+ msg);
+                        if (msg.what == 1) {
+                            //登录成功，
+                            Toast.makeText(LoginActivity.this, "验证成功", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(LoginActivity.this, FunctionActivity.class);
+                            startActivity(intent);
+
+                        } else {
+                            Toast.makeText(LoginActivity.this, "用户名或密码错误！", Toast.LENGTH_LONG).show();
+                            //System.out.println("fail");
+                        }
+
+
+                    }
+                };
+
+                HttpClient client = new HttpClient(url, list, method, handler);
+                Thread thread = new Thread(client);
                 thread.start();
-
-
 
 
             }
         });
 
 
-
-
-
     }
-
-
 
 
 }
