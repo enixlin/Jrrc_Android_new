@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.CookieManager;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -33,6 +34,7 @@ public class HttpClient implements Runnable {
     private ArrayList<ParamPairs> list;
     private String method;
     private Handler handler;
+    private CookieManager cookieManager;
 
 
     public HttpClient(String url, ArrayList<ParamPairs> list, String method, Handler handler) {
@@ -42,10 +44,14 @@ public class HttpClient implements Runnable {
         this.handler = handler;
 
         try {
-            URL URL = new URL(this.url + encoderparams(list));
+            //URL URL = new URL(this.url + encoderparams(list));
+            URL URL = new URL(this.url );
             this.client = (HttpURLConnection) URL.openConnection();
             this.client.setDoOutput(true);
+            this.client.setRequestProperty("encoding", "utf-8");
             this.client.setRequestMethod("POST");
+
+
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -108,6 +114,20 @@ public class HttpClient implements Runnable {
 
         try {
 
+            OutputStream os=client.getOutputStream();
+            OutputStreamWriter osw=new OutputStreamWriter(os);
+            BufferedWriter bw=new BufferedWriter(osw);
+
+            bw.write(paraSerialize(list));
+            bw.flush();
+
+            bw.close();
+            osw.close();
+            os.close();
+
+
+
+
             InputStream is = this.client.getInputStream();
             InputStreamReader isr = new InputStreamReader(is, "utf-8");
             BufferedReader br = new BufferedReader(isr);
@@ -134,5 +154,19 @@ public class HttpClient implements Runnable {
 
         }
 
+    }
+
+
+
+    private String paraSerialize(ArrayList<ParamPairs> list){
+        String strlist="";
+        for(int i=0;i<list.size();i++){
+            if (i==0){
+                strlist=strlist+list.get(i).getKey()+"="+list.get(i).getValue();
+            }else {
+                strlist=strlist+"&"+list.get(i).getKey()+"="+list.get(i).getValue();
+            }
+        }
+        return strlist;
     }
 }
