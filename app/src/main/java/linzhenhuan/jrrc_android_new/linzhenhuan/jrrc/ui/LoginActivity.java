@@ -100,7 +100,7 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View v) {
                 //  String url="http://10.0.2.2/jrrc_server_php/home/Login/login_android/name/a/password/a";
-                String url = "http://10.0.2.2/jrrc_server_php/home/Login/login_android";
+                String url = "http://linzhenhuan.net/jrrc_server_php/home/Login/login_android";
                 // String url="http://192.168.31.165/jrrc_server_php/home/Login/login_android";
                 ArrayList<ParamPairs> list = new ArrayList<ParamPairs>();
                 String method = "POST";
