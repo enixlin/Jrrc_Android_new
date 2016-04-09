@@ -1,51 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="bottom"
+    android:gravity="bottom"
+    android:background="@drawable/showphoto"
     android:orientation="vertical"
-    >
+    android:weightSum="1">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="bottom"
+
         android:orientation="vertical"
+        android:weightSum="1"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="52dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:background="#50ffffff"
+
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
                 android:layout_height="wrap_content"
-                android:text="用户名" />
+                android:text="户名: " />
 
             <EditText
                 android:id="@+id/et_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="a" />
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:background="#ffffff"
+                android:hint="请输入你的用户名"
+                android:textColor="#FF8442"
+                android:text="" />
 
         </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="52dp"
+            android:gravity="center"
+            android:background="#50ffffff"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="密码" />
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                android:text="密码: " />
 
             <EditText
                 android:id="@+id/et_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:password="true"
+                android:background="#ffffff"
+                android:hint="请输入你的密码"
+                android:textColor="#FF8442"
                 android:text="a" />
 
         </LinearLayout>
@@ -58,21 +84,21 @@
 
             <Button
                 android:id="@+id/btn_exit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+
+                android:layout_height="50dp"
+                android:background="@drawable/drawtest"
                 android:text="退  出" />
 
             <Button
                 android:id="@+id/btn_submit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:background="@drawable/drawtest"
                 android:text="登录" />
 
-            <Button
-                android:id="@+id/button4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="test bundle" />
+
 
         </LinearLayout>
 
@@ -87,6 +113,10 @@
 
         </LinearLayout>
 
+
+
     </LinearLayout>
 
-</ScrollView>
+
+
+</LinearLayout>

@@ -53,7 +53,7 @@ public class LoginActivity extends Activity {
 
     private Button btn_exit;
     private Button btn_submit;
-    private Button btn_testBundle;
+//    private Button btn_testBundle;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -68,30 +68,22 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
-
         tv_message = (TextView) findViewById(R.id.tv_message);
-
         et_name = (EditText) findViewById(R.id.et_name);
         et_password = (EditText) findViewById(R.id.et_password);
-
-        btn_testBundle= (Button) findViewById(R.id.button4);
-        btn_testBundle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                ParamPairs paramPairs = new ParamPairs("name", et_name.getText().toString());
-                //bundle.putString("name", "linzhenhuan");
-                bundle.putSerializable("name", paramPairs);
-                Intent intent = new Intent(LoginActivity.this, TestBundleActivity.class);
-                intent.putExtras(bundle);
-                startActivityForResult(intent, 1);
-
-
-            }
-        });
-
-
+//        btn_testBundle = (Button) findViewById(R.id.button4);
+//        btn_testBundle.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Bundle bundle = new Bundle();
+//                ParamPairs paramPairs = new ParamPairs("name", et_name.getText().toString());
+//                //bundle.putString("name", "linzhenhuan");
+//                bundle.putSerializable("name", paramPairs);
+//                Intent intent = new Intent(LoginActivity.this, TestBundleActivity.class);
+//                intent.putExtras(bundle);
+//                startActivityForResult(intent, 1);
+//            }
+//        });
 
         //退出app
         btn_exit = (Button) findViewById(R.id.btn_exit);
@@ -108,7 +100,7 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View v) {
                 //  String url="http://10.0.2.2/jrrc_server_php/home/Login/login_android/name/a/password/a";
-                String url = "http://10.0.2.2/jrrc_server_php/index.php?home/Login/login_android/";
+                String url = "http://10.0.2.2/jrrc_server_php/home/Login/login_android";
                 // String url="http://192.168.31.165/jrrc_server_php/home/Login/login_android";
                 ArrayList<ParamPairs> list = new ArrayList<ParamPairs>();
                 String method = "POST";
@@ -128,15 +120,14 @@ public class LoginActivity extends Activity {
                             //登录成功，
                             Toast.makeText(LoginActivity.this, "验证成功", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(LoginActivity.this, FunctionActivity.class);
-                            Bundle bundle=new Bundle();
-                            
+                            Bundle bundle = new Bundle();
+
                             startActivity(intent);
 
                         } else {
                             Toast.makeText(LoginActivity.this, "用户名或密码错误！", Toast.LENGTH_LONG).show();
                             //System.out.println("fail");
                         }
-
 
                     }
                 };
@@ -151,7 +142,6 @@ public class LoginActivity extends Activity {
 
 
     }
-
 
 
 }
