@@ -1,20 +1,56 @@
 package linzhenhuan.jrrc_android_new.linzhenhuan.jrrc.dao;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 import linzhenhuan.jrrc_android_new.R;
 
 /**
  * Created by linzhenhuan on 16/4/9.
  */
-public class functionListAdapter  extends BaseAdapter{
-    private ArrayList<functionCell> list;
+public class functionListAdapter extends BaseAdapter {
+
+    private Context context;
+    protected ArrayList<functionCell> list;
+
+
+    public functionListAdapter(Context conext) {
+        this.context=conext;
+        this.list=new ArrayList<functionCell>();
+    }
+
+    public  void add(String title,String des,int imageId){
+       functionCell celldate=null;
+       list.add(new functionCell(des,imageId,title));
+
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    public ArrayList<functionCell> getList() {
+        return list;
+    }
+
+    public void setList(ArrayList<functionCell> list) {
+        this.list = list;
+    }
+
+
+
 
     @Override
     public int getCount() {
@@ -33,11 +69,27 @@ public class functionListAdapter  extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView==null){
-            Inflater in;
-            in = LayoutInflater.from(functionCell.class);
+        LinearLayout ll = null;
+        functionCell celldata = getItem(position);
+
+
+        if (convertView != null) {
+                ll= (LinearLayout) convertView;
+        } else {
+                ll= (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.functioncell,null);
         }
 
-        return null;
+        ImageView iv= (ImageView) ll.findViewById(R.id.imageView);
+        TextView tv_title= (TextView) ll.findViewById(R.id.tv_title);
+        TextView tv_dec= (TextView) ll.findViewById(R.id.tv_description);
+
+
+        iv.setImageResource(celldata.getImageId());
+        tv_title.setText(celldata.getName());
+        tv_dec.setText(celldata.getDescrition());
+
+        return ll;
     }
+
+
 }

@@ -8,13 +8,12 @@ public class functionCell {
 
     private String name;
     private String descrition;
-    private String image;
+    private int imageId;
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
+    public functionCell(String descrition, int imageId, String name) {
+        this.descrition = descrition;
+        this.imageId = imageId;
         this.name = name;
     }
 
@@ -26,11 +25,19 @@ public class functionCell {
         this.descrition = descrition;
     }
 
-    public String getImage() {
-        return image;
+    public int getImageId() {
+        return imageId;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
