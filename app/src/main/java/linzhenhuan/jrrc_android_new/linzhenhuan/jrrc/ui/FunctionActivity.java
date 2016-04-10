@@ -3,7 +3,10 @@ package linzhenhuan.jrrc_android_new.linzhenhuan.jrrc.ui;
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import linzhenhuan.jrrc_android_new.R;
 import linzhenhuan.jrrc_android_new.linzhenhuan.jrrc.dao.functionListAdapter;
@@ -17,6 +20,13 @@ public class FunctionActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_function);
         initialView();
+
+        functionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(FunctionActivity.this,Adapter.getItem(position).getName(),Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -55,4 +65,7 @@ public class FunctionActivity extends Activity {
         functionListView.setAdapter(Adapter);
 
     }
+
+
+
 }
